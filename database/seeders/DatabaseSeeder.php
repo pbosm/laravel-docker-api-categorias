@@ -23,9 +23,12 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123')
         ]);
 
-        $this->call([
-            // CategoriasSeeder::class,
-            SubcategoriasSeeder::class,
+        \App\Models\Categorias::factory(10)->create();
+
+        \App\Models\Subcategorias::factory(10)->create([
+            'id_categoria_pai' => function() {
+                return Categorias::inRandomOrder()->first()->id_categoria;
+            }
         ]);
     }
 }
