@@ -6,7 +6,10 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    zlib1g-dev \
     zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -29,9 +32,6 @@ RUN composer install --no-dev --optimize-autoloader
 
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
-
-# Set the user and group to match your host system
-RUN usermod -u 1000 www-data
 
 # Fix permissions for storage and cache directories
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
