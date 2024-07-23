@@ -13,6 +13,6 @@ class SubcategoriasSeeder extends Seeder
      */
     public function run(): void
     {
-        Subcategorias::factory(10)->create();
+        Subcategorias::factory()->count(10)->create();
     }
 }

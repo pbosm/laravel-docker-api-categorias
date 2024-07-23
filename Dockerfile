@@ -30,4 +30,11 @@ RUN composer install --no-dev --optimize-autoloader
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
 
+# Set the user and group to match your host system
+RUN usermod -u 1000 www-data
+
+# Fix permissions for storage and cache directories
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
 CMD ["php-fpm"]
