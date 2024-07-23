@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->bigIncrements('id_categoria');
-            $table->string('nome', 255)->notNullable()->unique();
+            $table->string('nome', 255)->notNullable();
         });
     }
 
