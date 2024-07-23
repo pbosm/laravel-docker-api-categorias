@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Models\Categorias;
 use App\Models\Subcategorias;
 
@@ -17,13 +19,24 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'password' => Hash::make('123')
-        ]);
+        $categorias = [
+            'categoria1',
+            'categoria2',
+            'categoria3',
+            'categoria4',
+            'categoria5',
+            'categoria6',
+            'categoria7',
+            'categoria8',
+            'categoria9',
+            'categoria10'
+        ];
 
-        \App\Models\Categorias::factory(10)->create();
+        foreach ($categorias as $categoria) {
+            DB::table('categorias')->insert([
+                'nome' => $categoria,
+            ]);
+        }
 
         \App\Models\Subcategorias::factory(10)->create([
             'id_categoria_pai' => function() {
