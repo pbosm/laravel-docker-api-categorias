@@ -38,7 +38,7 @@ class CategoriasController extends Controller
             return response()->json(['message' => 'Categoria ' . $categoria->nome . ' criada com sucesso!'], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
-                'errors' => $e->errors()
+                'errors' => 'Não foi possivel criar essa categoria!'
             ], 422);
         }
     }
