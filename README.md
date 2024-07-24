@@ -75,7 +75,7 @@ Usando postman ou outra ferramenta semelhante teste as API
 #### Rota Categoria, excluir por id_categoria
 
 ```http
-  DELETE  http://localhost:8080/api/categorias
+  DELETE  http://localhost:8080/api/categorias/{id_categoria}
 ```
 | Key           | Headers        | Bearer    |
 | :------------ | :------------- | :------- |
