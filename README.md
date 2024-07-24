@@ -14,7 +14,7 @@ Uma breve descrição sobre como rodar esse projeto localmente com docker
     * php artisan cache:clear
     * php artisan config:cache
 - Rode os testes unitarios - php artisan test
-
+- Probleminha de lógica a resposta está no arquivo exerciocioLogica.php
 
 # Documentação API  
 Usando postman ou outra ferramenta semelhante teste as API
