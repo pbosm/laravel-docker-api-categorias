@@ -1,66 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Caminho feliz local
 
-## About Laravel
+Uma breve descrição sobre como rodar esse projeto localmente com docker 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Faça o git clone desse repositório
+- Entre na pasta do repositório - cd local do projeto
+- No terminal, dê um - sudo docker compose up
+- Entre no container, docker exec -it laravel-lojacorr bash, dentro dele, dê um cp .env.example .env e composer install
+- Rode os seguintes comandos; 
+    * php artisan key:generate 
+    * php artisan migrate
+    * php artisan db:seed
+    * php artisan cache:clear
+    * php artisan config:cache
+- Rode os testes unitarios - php artisan test
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# Documentação API  
+Usando postman ou outra ferramenta semelhante teste as API
 
-## Learning Laravel
+#### Rota register 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```http
+  POST  http://localhost:8080/api/register
+```
+| key   | value       | Headers                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `name`      | Novo Usuário | Content-type ->application/json |
+| `email`     | novo_usuario@example.com | Content-type ->application/json |
+| `password`  | senha_secreta | Content-type ->application/json |
+| `password_confirmation`  | senha_secreta | Content-type ->application/json |
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Rota login
 
-## Laravel Sponsors
+```http
+  POST  http://localhost:8080/api/login
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| key   | value       | Headers                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `email`     | novo_usuario@example.com | Content-type ->application/json |
+| `password`  | senha_secreta | Content-type ->application/json |
 
-### Premium Partners
+#### Efetuando o register ou login, será retornado o token, que deverá ser usando no header authorization
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### Rota Categoria, seleciona todas
 
-## Contributing
+```http
+  GET  http://localhost:8080/api/categorias
+```
+| Headers        | Value        |
+| :------------- | :----------- |
+| Authorization  | Bearer token |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Rota Categoria, seleciona pelo id_categoria
 
-## Code of Conduct
+```http
+  GET  http://localhost:8080/api/categorias/{id_categoria}
+```
+| Key           | Headers        | Bearer    |
+| :------------ | :------------- | :------- |
+| id_categoria  | Authorization  | {token}  |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Rota Categoria, criando categoria
 
-## Security Vulnerabilities
+```http
+  POST  http://localhost:8080/api/categorias
+```
+| Key  | Value        | Headers        | Bearer  |
+| :--- | :------------- | :----------- | :------------- |
+| nome | Nova categoria  | Authorization |     {token}           |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Rota Categoria, excluir por id_categoria
 
-## License
+```http
+  DELETE  http://localhost:8080/api/categorias
+```
+| Key           | Headers        | Bearer    |
+| :------------ | :------------- | :------- |
+| id_categoria  | Authorization  | {token}  |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+
